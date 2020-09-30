@@ -1,0 +1,46 @@
+{
+  "name": "@catdad/to-bmp",
+  "version": "1.0.0",
+  "description": "to-bmp",
+  "main": "index.js",
+  "bin": "bin.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/catdad-experiments/to-bmp.git"
+  },
+  "author": "Kiril Vatev <vatev.1@gmail.com>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/catdad-experiments/to-bmp/issues"
+  },
+  "homepage": "https://github.com/catdad-experiments/to-bmp#readme",
+  "engines": {
+    "node": ">=10.0.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "files": [
+    "index.js",
+    "bin.js"
+  ],
+  "devDependencies": {
+    "eslint": "^5.16.0"
+  },
+  "keywords": [
+    "buffer",
+    "convert",
+    "fast",
+    "jpg",
+    "png",
+    "bmp"
+  ],
+  "dependencies": {
+    "bmp-js": "^0.1.0",
+    "jpeg-js": "^0.4.2",
+    "node-fetch": "^2.6.1"
+  }
+}
