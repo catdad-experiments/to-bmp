@@ -42,7 +42,12 @@
     "fast",
     "jpg",
     "png",
-    "bmp"
+    "bmp",
+    "encode",
+    "encoder",
+    "electron",
+    "splash",
+    "nsis"
   ],
   "dependencies": {
     "jpeg-js": "^0.4.2",
