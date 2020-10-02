@@ -1,5 +1,5 @@
 const jpegJs = require('jpeg-js');
-const bmpJs = require('bmp-js');
+const Encoder = require('./lib/encoder.js');
 
 module.exports = async (buffer) => {
   const { width, height, data } = jpegJs.decode(buffer);
@@ -13,7 +13,8 @@ module.exports = async (buffer) => {
     agbr[i + 3] = data[i + 0];
   }
 
-  const output = bmpJs.encode({ data: agbr, width, height });
+  const encoder = new Encoder({ data: agbr, width, height });
+  encoder.encode;
 
-  return output.data;
+  return encoder.data;
 };

@@ -39,7 +39,6 @@
     "bmp"
   ],
   "dependencies": {
-    "bmp-js": "^0.1.0",
     "jpeg-js": "^0.4.2",
     "node-fetch": "^2.6.1"
   }
