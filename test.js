@@ -99,5 +99,13 @@ describe('to-bmp', () => {
       expect(stderr.toString()).to.equal('');
       expect(err).to.deep.equal({ code: 0 });
     });
+
+    it('exits with an error if data other than a jpeg piped into stdin', async () => {
+      const { stdout, stderr, err } = await exec([], {}, Buffer.from('I am some text'));
+
+      expect(stdout.toString()).to.equal('');
+      expect(stderr.toString()).to.include('Error:');
+      expect(err).to.deep.equal({ code: 1 });
+    });
   });
 });
