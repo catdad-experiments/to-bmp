@@ -2,9 +2,13 @@ const jpegJs = require('jpeg-js');
 const Encoder = require('./lib/encoder.js');
 
 module.exports = async (buffer) => {
+  if (!(buffer instanceof Uint8Array)) {
+    throw new Error('the input data should be a Buffer or Uint8Array');
+  }
+
   const { width, height, data } = jpegJs.decode(buffer);
 
-  const agbr = Buffer.alloc(data.length);
+  const agbr = new Uint8Array(data.length);
 
   for (let i = 0; i < data.length; i = i + 4) {
     agbr[i + 0] = data[i + 3];
