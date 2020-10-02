@@ -12,7 +12,7 @@
     "url": "git+https://github.com/catdad-experiments/to-bmp.git"
   },
   "author": "Kiril Vatev <vatev.1@gmail.com>",
-  "license": "ISC",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/catdad-experiments/to-bmp/issues"
   },
