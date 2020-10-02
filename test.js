@@ -1,12 +1,11 @@
 /* eslint-env mocha */
 const crypto = require('crypto');
 const { spawn } = require('child_process');
-const { finished } = require('stream');
-const { promisify } = require('util');
 
 const { expect } = require('chai');
 const isBmp = require('is-bmp');
 const safe = require('safe-await');
+const eos = require('end-of-stream');
 const fetch = require('./lib/fetch-success.js');
 
 const lib = (...args) => safe(require('./')(...args));
@@ -44,8 +43,6 @@ describe('to-bmp', () => {
   });
 
   describe('cli', () => {
-    const eos = promisify(finished);
-
     const exec = async (args, options = {}, input = Buffer.from('')) => {
       return await Promise.resolve().then(async () => {
         const proc = spawn(process.execPath, ['bin'].concat(args), Object.assign({}, options, {
