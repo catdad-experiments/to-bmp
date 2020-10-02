@@ -1,0 +1,25 @@
+language: node_js
+
+node_js:
+  - '14'
+  - '12'
+  - '10'
+  - '8'
+
+jobs:
+  include:
+    - stage: release
+      if: tag IS present
+      os: linux
+      node_js: '14'
+      install: skip
+      script: echo "Deploying to npm ..."
+      deploy:
+        provider: npm
+        email: vatev.1+npm@gmail.com
+        api_key:
+          # catdad a368......cad5
+          secure: Lgr3Mn/lVJW5So5daTD6QOEPsSb8dKlYb+td9gzHBTjrBhD5mtlvvDEevDWMxwNDbp5GrP3szQNROOj6WXsYoIHZ/P2nf0AG2W0lnENNWzUuWf9PIw7YusOwaFx09cMnOZBMzd1XT+fd6b5QkxBl/UOIL8imGlmJBrwUCzUTSqlio/98uC1WcUpWedYQb2ZYosKIpVwRfJWdohI3ZNyEweJXIEe3PAdYpwIpusjofuQuPDYB80Dt6DEdB82fPSlkvDR5Yd/uCdJ6WMqs8VDf/fpHkDWTls4X2VHaP1ol65Cp/n0MZLCo7VqPGIaKcd8IvNIZlnDYEglmUblOU2rbDL75M+huo1bcVon/AbTaXElQF0YY1dhCsI2orcuK6nwDP7crCaqo3S1sIwWBRW2LnoJx7RnSvEYVBBAWKcE1fCJo2blL4cm27M/xpqaRCWlTec7Z6DYXa4oDBvQXClWuy9/F799YkgiVc6jZoQ7uFQbfDv8U+EKYAOaesHng0wnR6r8LWlC2pXS4dxjt8vp/J3PAd6jUYc1ns9dDUMFUkeKIyH3ikLoo7N8AXYegkteAFkVrI+/YNnDbRvTkiyIPhAu/qfzzzwLSyBai1kzktAzswmP90kbwyXQMkLdtkD6aB9aMapnw4MZShotamStJgNT5mmW63Dq1N9abGy8UMBo=
+        on:
+          tags: true
+          repo: catdad-experiments/to-bmp
