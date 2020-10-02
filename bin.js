@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-const fetch = require('node-fetch');
+const fetch = require('./lib/fetch-success.js');
 
 const convert = require('./');
 
@@ -17,13 +17,8 @@ const readStdin = async () => {
 };
 
 const download = async () => {
-  const res = await fetch(url);
-
-  if (!res.ok) {
-    throw new Error(`failed to fetch "${url}": ${res.status} ${res.statusText}`);
-  }
-
-  return await res.buffer();
+  const { body } = await fetch(url);
+  return body;
 };
 
 (async () => {
