@@ -1,5 +1,13 @@
 # @catdad/to-bmp
 
+[![Build Status][travis.svg]][travis.link] [![NPM Downloads][npm-downloads.svg]][npm.link] [![NPM Version][npm-version.svg]][npm.link]
+
+[travis.svg]: https://travis-ci.com/catdad-experiments/to-bmp.svg?branch=master
+[travis.link]: https://travis-ci.com/catdad-experiments/to-bmp
+[npm-downloads.svg]: https://img.shields.io/npm/dm/@catdad/to-bmp.svg
+[npm.link]: https://www.npmjs.com/package/@catdad/to-bmp
+[npm-version.svg]: https://img.shields.io/npm/v/@catdad/to-bmp.svg
+
 > Convert JPG iamges to BMP
 
 This module was specifically created to generate BMP images that are compatible with NSIS in order to create [splash images for Electron portable applications](https://github.com/electron-userland/electron-builder/issues/2548), when I discovered that various popular encoders did not produce images that could be used within NSIS. The encoder in this module is based on [`@wokwi/bmp-ts`](https://github.com/wokwi/bmp-ts).
