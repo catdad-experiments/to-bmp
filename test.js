@@ -1,5 +1,9 @@
 /* eslint-env mocha */
 const crypto = require('crypto');
+const { spawn } = require('child_process');
+const { finished } = require('stream');
+const { promisify } = require('util');
+
 const { expect } = require('chai');
 const isBmp = require('is-bmp');
 const safe = require('safe-await');
@@ -36,6 +40,64 @@ describe('to-bmp', () => {
       expect(error).to.be.instanceOf(Error)
         .and.to.have.property('message', 'the input data should be a Buffer or Uint8Array');
       expect(output).to.equal(undefined);
+    });
+  });
+
+  describe('cli', () => {
+    const eos = promisify(finished);
+
+    const exec = async (args, options = {}, input = Buffer.from('')) => {
+      return await Promise.resolve().then(async () => {
+        const proc = spawn(process.execPath, ['bin'].concat(args), Object.assign({}, options, {
+          stdio: ['pipe', 'pipe', 'pipe'],
+          cwd: __dirname,
+          windowsHide: true,
+          env: {
+            ...process.env,
+            NODE_NO_WARNINGS: 1
+          }
+        }));
+
+        const stdout = [];
+        const stderr = [];
+
+        proc.stdout.on('data', chunk => stdout.push(chunk));
+        proc.stderr.on('data', chunk => stderr.push(chunk));
+
+        proc.stdin.end(input);
+
+        const [code] = await Promise.all([
+          new Promise(resolve => proc.on('exit', code => resolve(code))),
+          new Promise(resolve => eos(proc.stdout, () => resolve())),
+          new Promise(resolve => eos(proc.stderr, () => resolve())),
+        ]);
+
+        return {
+          err: { code },
+          stdout: Buffer.concat(stdout),
+          stderr: Buffer.concat(stderr)
+        };
+      });
+    };
+
+    it('converts an image piped in through stdin, outputting the result to stdout', async () => {
+      const { stdout, stderr, err } = await exec([], {}, data);
+
+      expect(isBmp(stdout)).to.equal(true);
+      expect(hash(stdout)).to.equal(HASH);
+
+      expect(stderr.toString()).to.equal('');
+      expect(err).to.deep.equal({ code: 0 });
+    });
+
+    it('converts an image provided by a url, outputting the result to stdout', async () => {
+      const { stdout, stderr, err } = await exec([URL], {});
+
+      expect(isBmp(stdout)).to.equal(true);
+      expect(hash(stdout)).to.equal(HASH);
+
+      expect(stderr.toString()).to.equal('');
+      expect(err).to.deep.equal({ code: 0 });
     });
   });
 });
