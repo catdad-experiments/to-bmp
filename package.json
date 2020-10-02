@@ -1,6 +1,6 @@
 {
   "name": "@catdad/to-bmp",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "to-bmp",
   "main": "index.js",
   "bin": "bin.js",
