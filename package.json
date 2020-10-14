@@ -51,6 +51,7 @@
   ],
   "dependencies": {
     "jpeg-js": "^0.4.2",
-    "node-fetch": "^2.6.1"
+    "node-fetch": "^2.6.1",
+    "pngjs": "^5.0.0"
   }
 }
