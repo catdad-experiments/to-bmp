@@ -48,7 +48,7 @@ describe('to-bmp', () => {
       expect(hash(output)).to.equal(HASH);
     });
 
-    it('errors if input is not a jpeg', async () => {
+    it('errors if input is not a an expected image type', async () => {
       const [error, output] = await lib('I am a string');
 
       expect(error).to.be.instanceOf(Error)
@@ -112,7 +112,7 @@ describe('to-bmp', () => {
       expect(err).to.deep.equal({ code: 0 });
     });
 
-    it('exits with an error if data other than a jpeg piped into stdin', async () => {
+    it('exits with an error if data other than an expected image type piped into stdin', async () => {
       const { stdout, stderr, err } = await exec([], {}, Buffer.from('I am some text'));
 
       expect(stdout.toString()).to.equal('');
