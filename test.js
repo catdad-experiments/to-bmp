@@ -7,6 +7,8 @@ const isBmp = require('is-bmp');
 const safe = require('safe-await');
 const eos = require('end-of-stream');
 const fetch = require('./lib/fetch-success.js');
+const jpeg = require('jpeg-js');
+const PNG = require('pngjs').PNG;
 
 const lib = (...args) => safe(require('./')(...args));
 
@@ -27,6 +29,19 @@ describe('to-bmp', () => {
   describe('api', () => {
     it('converts a jpeg to bmp', async () => {
       const [error, output] = await lib(data);
+
+      expect(error).to.equal(undefined);
+      expect(isBmp(output)).to.equal(true, 'output is not a bmp');
+      expect(hash(output)).to.equal(HASH);
+    });
+
+    it('converts a png to bmp', async () => {
+      const { width, height, data: jpegData } = jpeg.decode(data);
+      let png = new PNG({ width, height });
+      png.data = jpegData;
+      const pngBuffer = PNG.sync.write(png);
+
+      const [error, output] = await lib(pngBuffer);
 
       expect(error).to.equal(undefined);
       expect(isBmp(output)).to.equal(true, 'output is not a bmp');
