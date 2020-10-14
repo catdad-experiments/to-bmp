@@ -2,14 +2,19 @@ const jpegJs = require('jpeg-js');
 const pngJs = require('pngjs');
 const Encoder = require('./lib/encoder.js');
 
+const PNG_SIGNATURE = [0x89, 0x50, 0x4E, 0x47, 0xD, 0xA, 0x1A, 0xA];
+
 function compare(a, b) {
-  for (let i = 0; i < a.length; i++) {
+  for (let i = 0, l = a.length; i < l; i++) {
     if (a[i] !== b[i]) {
       return false;
     }
   }
+
   return true;
 }
+
+const isPng = buffer => compare(PNG_SIGNATURE, buffer);
 
 module.exports = async (buffer) => {
   if (!(buffer instanceof Uint8Array)) {
@@ -18,7 +23,7 @@ module.exports = async (buffer) => {
 
   let decodedBuffer;
 
-  if (compare(buffer.slice(0, 8), [0x89, 0x50, 0x4E, 0x47, 0xD, 0xA, 0x1A, 0xA])) { // PNG File Signature
+  if (isPng(buffer)) {
     decodedBuffer = pngJs.PNG.sync.read(buffer);
   } else {
     decodedBuffer = jpegJs.decode(buffer);

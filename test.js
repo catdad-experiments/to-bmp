@@ -37,7 +37,7 @@ describe('to-bmp', () => {
 
     it('converts a png to bmp', async () => {
       const { width, height, data: jpegData } = jpeg.decode(data);
-      let png = new PNG({ width, height });
+      const png = new PNG({ width, height });
       png.data = jpegData;
       const pngBuffer = PNG.sync.write(png);
 
