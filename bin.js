@@ -1,5 +1,6 @@
 #!/usr/bin/env node
 
+require('./lib/bin-help.js');
 const fetch = require('./lib/fetch-success.js');
 
 const convert = require('./');
