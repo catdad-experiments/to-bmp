@@ -10,6 +10,8 @@ const fetch = require('./lib/fetch-success.js');
 const jpeg = require('jpeg-js');
 const PNG = require('pngjs').PNG;
 
+const { version } = require('./package.json');
+
 const lib = (...args) => safe(require('./')(...args));
 
 // maybe this should be a local image? meh
@@ -119,5 +121,30 @@ describe('to-bmp', () => {
       expect(stderr.toString()).to.include('Error:');
       expect(err).to.deep.equal({ code: 1 });
     });
+
+    for (const flag of ['--version', '-v']) {
+      it(`prints the CLI version when the ${flag} flag is used`, async () => {
+        const { stdout, stderr, err } = await exec([flag], {});
+
+        expect(stdout.toString()).to.equal(`${version}\n`);
+        expect(stderr.toString()).to.equal('');
+        expect(err).to.deep.equal({ code: 0 });
+      });
+    }
+
+    for (const flag of ['--help', '-h']) {
+      it(`prints the CLI help text when the ${flag} flag is used`, async () => {
+        const { stdout, stderr, err } = await exec([flag], {});
+
+        const text = stdout.toString();
+
+        expect(text).to.include(`to-bmp v${version}`);
+        expect(text).to.include('to-bmp < input.jpg > output.bmp');
+        expect(text).to.include('to-bmp http://example.com/input.png > output.bmp');
+
+        expect(stderr.toString()).to.equal('');
+        expect(err).to.deep.equal({ code: 0 });
+      });
+    }
   });
 });
